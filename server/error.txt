@@ -1,0 +1,97 @@
+
+repo:https://github.com/hagopj13/node-express-boilerplate
+
+go to node boiler palte
+copy complete utils folder
+copy three middlewares use code from app.js of that repo
+code looks like that 
+            app.use((req, res, next) => {
+            next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
+            });
+            
+            // convert error to ApiError, if needed
+            app.use(errorConverter);
+            
+            // handle error
+            app.use(errorHandler);
+use it in our project inside main (index.js) script at end
+-npm i http-status
+-then we go to repo middlewares and copy error js (we will delete something from its iside lator on maybe)
+-from repo config folder we will copy config and logger and put in our config folder
+-create validation folder in server and inside it also create index.js and copy the same code from repo and put it in their
+then inside same folder make and put code of custom.js as present in repo
+then user.validation.js as in validation folder of repo
+now from repo app.js pick the path which was that 
+const { errorConverter, errorHandler } = require('./middlewares/error');   and put this line in our main index.js of server
+now time to install some pakeges
+--in config.js file we need dotenc and joi package
+--in logger.js we need winston
+
+
+solve terminal errors:
+put NODE_ENV=development in env
+comment some things from error.js and our errors FIX
+right now error.js looks like this
+            const mongoose = require('mongoose');
+            const httpStatus = require('http-status');
+            // const config = require('../config/config');
+            // const logger = require('../config/logger');
+            const ApiError = require('../utils/ApiError');
+
+            const errorConverter = (err, req, res, next) => {
+              let error = err;
+              if (!(error instanceof ApiError)) {
+                const statusCode =
+                  error.statusCode || error instanceof mongoose.Error ? httpStatus.BAD_REQUEST : httpStatus.INTERNAL_SERVER_ERROR;
+                const message = error.message || httpStatus[statusCode];
+                error = new ApiError(statusCode, message, false, err.stack);
+              }
+              next(error);
+            };
+
+            // eslint-disable-next-line no-unused-vars
+            const errorHandler = (err, req, res, next) => {
+              let { statusCode, message } = err;
+              // if (config.env === 'production' && !err.isOperational) {
+              //   statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+              //   message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
+              // }
+
+              res.locals.errorMessage = err.message;
+
+              const response = {
+                code: statusCode,
+                message,
+                stack: err.stack 
+              };
+
+              // if (config.env === 'development') {
+              //   logger.error(err);
+              // }
+
+              res.status(statusCode).send(response);
+            };
+
+            module.exports = {
+              errorConverter,
+              errorHandler,
+            };
+
+
+in my athentication.controller.js i do some stuff mainly use a catchAsync function and import httpStatus
+final looks is
+        const httpStatus=require('http-status')
+        const { AuthService } = require("../services");
+        const catchAsync=require('../utils/catchAsync')
+
+        const Register=catchAsync(async (req,res)=>{
+            const res_obj=await AuthService.register(req?.body);
+            //console.log(res_obj)
+            //res.send(res_obj)
+            res.status(httpStatus.CREATED).send(res_obj)
+        })
+
+        module.exports={
+            Register,
+        }
+
