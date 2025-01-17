@@ -1,0 +1,1 @@
+exports.authenticationController=require('./authentication.controllers')
