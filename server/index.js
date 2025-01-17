@@ -14,8 +14,9 @@ app.get('/', (req, res) => {
 
 //middleware
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 app.use('/api/v1',Authentication)
-
 
 //db
 connectToDB()
