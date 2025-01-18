@@ -9,6 +9,22 @@ const Register=catchAsync(async (req,res)=>{
     res.status(httpStatus.status.CREATED).send(res_obj)
 })
 
+const loginController=catchAsync(async (req,res)=>{
+    const res_obj=await AuthService.loginService(req?.body);
+    //console.log(res_obj)
+    //res.send(res_obj)
+    res.status(httpStatus.status.CREATED).send(res_obj)
+})
+
+const profileController=catchAsync(async (req,res)=>{
+    const res_obj=await AuthService.userProfile("678b887dc38f7acdddeeb44b");
+    //console.log(res_obj)
+    //res.send(res_obj)
+    res.status(httpStatus.status.CREATED).send(res_obj)
+})
+
 module.exports={
     Register,
+    loginController,
+    profileController
 }
