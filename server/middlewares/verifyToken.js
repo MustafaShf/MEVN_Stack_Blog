@@ -14,6 +14,7 @@ const verifyJWT=(req,res,next)=>
         const auth=token.split("Bearer ")[1]
         const verifyUser=jwt.verify(auth,constantKeys.jwtKey)
         req.user=verifyUser.id
+        console.log(req.user)
         next()
     } catch (error) {
         next(error)

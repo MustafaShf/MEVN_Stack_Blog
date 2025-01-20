@@ -1,4 +1,5 @@
 
+const { boolean } = require('joi');
 const mongoose = require('mongoose')
 
 let postSchema=new mongoose.Schema({
@@ -22,6 +23,10 @@ let postSchema=new mongoose.Schema({
     content:{
         type:String,
         required:true
+    },
+    isDeleted: {
+        type: Boolean,  // Corrected from `boolean` to `Boolean`
+        default: false
     }
 },{
     timestamps:true
