@@ -14,7 +14,9 @@ const register = async (body) => {
     email,
     password,
   });
-  return user;
+  return {
+    "Msg":'User Successfully Registered'
+  };
 };
 
 const loginService = async (body) => {
@@ -35,7 +37,9 @@ const loginService = async (body) => {
     const token=createToken(existUser.id)
 
     //console.log(existUser.id)
-    return token
+    return {msg:'User Successfully Login',
+      'token':token
+    }
 
 
 };
