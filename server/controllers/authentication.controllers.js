@@ -40,7 +40,7 @@ const AllpostContoller=catchAsync(async (req,res)=>{
 })
 
 const postByID=catchAsync(async (req,res)=>{
-    console.log(req.params.id)
+    //console.log(req.params.id)
     const res_obj=await AuthService.PostByID(req?.params.id);
    // console.log(req)
     //res.send(res_obj)

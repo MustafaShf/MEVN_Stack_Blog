@@ -69,20 +69,19 @@ const loginService = async (body) => {
       image:file?.filename,
       user:user
     })
-    console.log(model
-    )
+    //console.log(model)
     return model
 
   };
   const AllPost= async ()=>{
-    const posts=await BlogPostModel.find({}).populate('user','email name')
+    const posts=await BlogPostModel.find({isDeleted:false}).populate('user','email name')
     return {posts,total:posts.length}
   }
 
   const PostByID= async (id)=>{
-    console.log(id)
-    const post = await BlogPostModel.find({ _id: id }).populate('user', 'email name');
-    if(post.isDeleted) return null
+    //console.log(id)
+    const post = await BlogPostModel.find({ _id: id , isDeleted:false}).populate('user', 'email name');
+    //if(post.isDeleted) return null
 
     //console.log(post)
     return {post}

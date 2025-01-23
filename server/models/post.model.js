@@ -1,5 +1,4 @@
 
-const { boolean } = require('joi');
 const mongoose = require('mongoose')
 
 let postSchema=new mongoose.Schema({
